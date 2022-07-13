@@ -16,6 +16,7 @@
     </div>
     <div class="sidebar-hide">
       <div class="btn" @click="collapse(false)">
+        <span>Expand menu </span>
         <i class="fa fa-angle-double-right" aria-hidden="true"></i>
       </div>
     </div>
@@ -33,6 +34,10 @@ export default {
     };
   },
   created() {
+    if (screen.width < 767) {
+      document.getElementById("app").classList.add("sidebar-collapse");
+    }
+
     this.axios.get("SUMMARY.md").then((response) => {
       const mdhtml = marked.parse(response.data);
       const parser = new DOMParser();
@@ -43,6 +48,8 @@ export default {
       this.updateBook();
       this.listenHashChange();
     });
+
+    
   },
   methods: {
     checkHash(doc) {

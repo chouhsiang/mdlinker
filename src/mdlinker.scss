@@ -33,6 +33,7 @@ body {
     z-index: 1;
     left: 0;
     border-bottom: 1px solid #e7e7e7;
+
     .search {
       float: left;
       margin: 4px 0 0 15px;
@@ -95,13 +96,23 @@ body {
     }
   }
 
+  @media (max-width: 767px) {
+    padding-top: 35px;
+    .toolbar {
+      top: 0;
+      height: 35px;
+
+      .search {
+        margin: 2px 0 0 15px;
+      }
+    }
+  }
 }
 
 .sidebar-hide {
   position: absolute;
   top: 0;
   left: 0;
-  background: #f8f8f8;
   width: 35px;
   color: #333;
   box-shadow: 0 0 4px #555;
@@ -112,6 +123,17 @@ body {
     font-size: 14px;
     font-weight: 400;
     padding: 6px 12px;
+  }
+  span {
+    display: none;
+  }
+  @media (max-width: 767px) {
+    width: 100vw;
+    background: white;
+    height: 34px;
+    span {
+      display: inline;
+    }
   }
 }
 
@@ -124,6 +146,10 @@ body {
     width: 100%;
     height: 100%;
   }
+
+  @media (max-width: 767px) { 
+    min-width: 100vw;
+  }
 }
 
 .sidebar-collapse {
@@ -133,5 +159,11 @@ body {
   .book-container {
     width: calc(100vw - 35px);
     margin-left: 35px;
+    @media (max-width: 767px) {
+      margin-left: 0;
+      margin-top: 34px;
+      width: 100%;
+      height: calc(100vh - 34px);
+    }
   }
 }
