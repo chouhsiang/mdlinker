@@ -1,6 +1,24 @@
 <template>
   <div class="layout">
-    <div class="summary" v-html="summary"></div>
+    <div class="sidebar">
+      <div class="toolbar">
+        <div class="form-group input-group-sm search">
+          <input class="form-control" placeholder="Search title..." />
+        </div>
+        <a class="btn" href="javascript:location.reload()">
+          <i class="fa fa-refresh" aria-hidden="true"></i>
+        </a>
+        <div class="btn" @click="collapse(true)">
+          <i class="fa fa-angle-double-left" aria-hidden="true"></i>
+        </div>
+      </div>
+      <div class="summary" v-html="summary"></div>
+    </div>
+    <div class="sidebar-hide">
+      <div class="btn" @click="collapse(false)">
+        <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+      </div>
+    </div>
     <div class="book-container">
       <iframe id="book"></iframe>
     </div>
@@ -21,7 +39,7 @@ export default {
       const doc = parser.parseFromString(mdhtml, "text/html");
 
       this.checkHash(doc);
-      this.setSummary(doc);
+      this.renderSummary(doc);
       this.updateBook();
       this.listenHashChange();
     });
@@ -36,12 +54,13 @@ export default {
         }
       }
     },
-    setSummary(doc) {
+    renderSummary(doc) {
       doc.querySelectorAll("a").forEach((el) => {
         const hash = "#" + encodeURIComponent(el.href);
         el.href = hash;
         if (location.hash == hash) {
           el.classList.add("active");
+          document.title = el.textContent;
         }
       });
       this.summary = doc.documentElement.outerHTML;
@@ -56,6 +75,7 @@ export default {
         el.classList.remove("active");
         if (location.hash == url.hash) {
           el.classList.add("active");
+          document.title = el.textContent;
         }
       });
     },
@@ -68,6 +88,13 @@ export default {
         },
         false
       );
+    },
+    collapse(enable) {
+      if (enable) {
+        document.getElementById("app").classList.add("sidebar-collapse");
+      } else {
+        document.getElementById("app").classList.remove("sidebar-collapse");
+      }
     },
   },
 };
