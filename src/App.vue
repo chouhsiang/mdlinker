@@ -62,7 +62,7 @@ export default {
       }
     },
     renderSummary(doc) {
-      doc.querySelectorAll("a").forEach((el) => {
+      doc.querySelectorAll('a:not([target="_blank"])').forEach((el) => {
         const hash = "#" + encodeURIComponent(el.href);
         el.href = hash;
         if (location.hash == hash) {
